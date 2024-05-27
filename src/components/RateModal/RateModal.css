@@ -1,0 +1,94 @@
+.rate-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  justify-content: space-around;
+  width: 450px;
+}
+
+.rate-comment-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-rate-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.rate {
+  float: left;
+}
+
+.rate:not(:checked) > input {
+  position: absolute;
+  top: -9999px;
+}
+.rate:not(:checked) > label {
+  float: right;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 30px;
+  color: #ccc;
+}
+.rate:not(:checked) > label:before {
+  content: "★ ";
+}
+.rate > input:checked ~ label {
+  color: #fcd53f;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #fcd53f;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #fcd53f;
+}
+
+.postButton {
+  display: flex;
+  margin-top: 5%;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #1a2d31;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.postButton:hover {
+  background-color: #2c4a50;
+}
+
+@media (max-width: 768px) {
+  .rate-container {
+    width: 330px;
+  }
+
+  .rate-comment-container {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rate-subcontainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .postRateTitle {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,144 @@
+.home-text {
+  text-align: center;
+  margin-top: 5%;
+}
+
+.centered-text {
+  color: #fff;
+}
+
+.first-text {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.second-text {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.centered-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.start-button {
+  padding: 20px 40px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #fff;
+  color: black;
+  background-color: #fff;
+  border-radius: 100px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.explore-button {
+  padding: 20px 40px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: transparent;
+  backdrop-filter: blur(20px);
+  border-radius: 100px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.scrollMouse {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.scroll-down-text {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: lighter;
+  margin-bottom: 1%;
+  color: #fff;
+}
+
+.mouse {
+  position: relative;
+  display: inline-block;
+  width: 1.875rem;
+  height: 3.125rem;
+  border-radius: 10rem;
+  border: 2px solid #fff;
+}
+.mouse::after {
+  box-sizing: border-box;
+  -webkit-transform: translate(-50%, 0);
+  -moz-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  content: "";
+  position: absolute;
+  display: block;
+  top: 25%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  -webkit-animation: mouse 2s linear infinite;
+  -moz-animation: mouse 2s linear infinite;
+  animation: mouse 2s linear infinite;
+}
+
+@-webkit-keyframes mouse {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+}
+
+@-moz-keyframes mouse {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+}
+
+@keyframes mouse {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home-text {
+    display: flex;
+    margin-top: 15%;
+    height: 60%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .first-text {
+    font-size: 2rem;
+    margin-bottom: 10%;
+  }
+
+  .second-text {
+    font-size: 1rem;
+  }
+}

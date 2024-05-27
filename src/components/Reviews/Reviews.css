@@ -1,0 +1,113 @@
+.review-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding: 0 8rem;
+}
+
+.navLink {
+  text-decoration: none;
+}
+
+.ratings-table,
+.comments-table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  margin: 0 10px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.title-row {
+  font-weight: bold;
+}
+
+.comment-content {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  opacity: 0.7;
+}
+
+.button-img {
+  width: 20px;
+  height: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination-button:hover {
+  background-color: #1a2d31;
+  color: white;
+  transition: 0.3s;
+}
+
+.pagination-button.active {
+  background-color: #1a2d31;
+  color: #fff;
+  border: 1px solid #1a2d31;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.comment-text {
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .review-container {
+    margin-bottom: 5%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .review-container {
+    flex-direction: column;
+    padding: 0;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-top: 0;
+  }
+}

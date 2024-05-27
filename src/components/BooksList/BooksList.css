@@ -1,0 +1,125 @@
+.books-section {
+  padding: 0 8rem;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  justify-content: space-around;
+}
+
+.results-count {
+  margin-left: 10px;
+}
+
+.books-container.no-books-found,
+.results-count.no-books-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.books-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 40px;
+  grid-row-gap: 40px;
+  padding-top: 40px;
+  margin-bottom: 5%;
+}
+
+.no-books-message {
+  text-align: center;
+  font-size: 18px;
+  color: #999;
+  margin-top: 20px;
+}
+
+.title-input-text,
+select {
+  padding: 8px;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 50%;
+}
+
+.title-input-text::placeholder {
+  color: #999;
+}
+
+select {
+  width: 10%;
+  cursor: pointer;
+}
+
+.clear-button {
+  background-color: #f44336;
+  color: #fff;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .books-container {
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 20px;
+  }
+  .books-section {
+    padding: 0 6rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .books-section {
+    padding: 0 2rem;
+  }
+
+  .filters {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .books-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .title-input-text,
+  select {
+    padding: 8px;
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 0;
+    margin-bottom: 10px;
+    width: 80%;
+  }
+
+  .title-input-text::placeholder {
+    color: #999;
+  }
+
+  select {
+    width: 80%;
+    cursor: pointer;
+  }
+
+  .clear-button {
+    width: 40%;
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+
+  .book-info {
+    padding: 30px 10px;
+  }
+}

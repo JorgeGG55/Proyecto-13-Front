@@ -1,0 +1,104 @@
+header {
+  padding: 4rem 8rem;
+  transition: background-color 0.3s ease;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.loginButton-home {
+  border: none;
+  color: #fff;
+  background-color: transparent;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.loginButton-other {
+  border: none;
+  color: black;
+  background-color: transparent;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.book-button-home {
+  cursor: pointer;
+  padding: 10px 15px;
+  border: 1px solid #fff;
+  background-color: transparent;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+  width: 100px;
+}
+
+.book-button-other {
+  cursor: pointer;
+  padding: 10px 15px;
+  border: 1px solid #c7cccf;
+  background-color: transparent;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100px;
+}
+
+.book-button:hover {
+  text-decoration: underline;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.menu-button img {
+  width: 30px;
+  height: 30px;
+}
+
+.sidebar {
+  position: fixed;
+  display: flex;
+  padding: 2rem 0rem;
+  top: 150px;
+  left: -400px;
+  width: 400px;
+  height: 100vh;
+  background-color: #221b1b;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease;
+  z-index: 9999;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    padding: 4rem 3rem;
+    transition: background-color 0.3s ease;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  header {
+    padding: 4rem 6rem;
+  }
+}
