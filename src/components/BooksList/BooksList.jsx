@@ -1,22 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { getBooks } from "../../utils/APIRoutes";
 import BookCard from "../BookCard/BookCard";
 import "./BooksList.css";
 
+const initialState = {
+  books: [],
+  filteredBooks: [],
+  searchTerm: "",
+  selectedGenre: "All",
+  selectedRating: "",
+  sortBy: "",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_BOOKS":
+      return { ...state, books: action.payload };
+    case "SET_FILTERED_BOOKS":
+      return { ...state, filteredBooks: action.payload };
+    case "SET_SEARCH_TERM":
+      return { ...state, searchTerm: action.payload };
+    case "SET_SELECTED_GENRE":
+      return { ...state, selectedGenre: action.payload };
+    case "SET_SELECTED_RATING":
+      return { ...state, selectedRating: action.payload };
+    case "SET_SORT_BY":
+      return { ...state, sortBy: action.payload };
+    case "CLEAR_FILTERS":
+      return {
+        ...state,
+        searchTerm: "",
+        selectedGenre: "All",
+        selectedRating: "",
+        sortBy: "",
+      };
+    default:
+      return state;
+  }
+}
+
 const BooksList = () => {
-  const [books, setBooks] = useState([]);
-  const [filteredBooks, setFilteredBooks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("All");
-  const [selectedRating, setSelectedRating] = useState("");
-  const [sortBy, setSortBy] = useState("");
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const response = await fetch(getBooks);
         const data = await response.json();
-        setBooks(data);
+        dispatch({ type: "SET_BOOKS", payload: data });
       } catch (error) {
         console.error("Error fetching books: ", error);
       }
@@ -27,51 +58,61 @@ const BooksList = () => {
 
   useEffect(() => {
     filterBooks();
-  }, [books, searchTerm, selectedGenre, selectedRating, sortBy]);
+  }, [
+    state.books,
+    state.searchTerm,
+    state.selectedGenre,
+    state.selectedRating,
+    state.sortBy,
+  ]);
 
   const filterBooks = () => {
-    let filtered = [...books];
+    let filtered = [...state.books];
 
-    if (searchTerm) {
+    if (state.searchTerm) {
       filtered = filtered.filter(
         (book) =>
-          book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          book.author.toLowerCase().includes(searchTerm.toLowerCase())
+          book.title.toLowerCase().includes(state.searchTerm.toLowerCase()) ||
+          book.author.toLowerCase().includes(state.searchTerm.toLowerCase())
       );
     }
 
-    if (selectedGenre !== "All") {
-      filtered = filtered.filter((book) => book.genre.includes(selectedGenre));
+    if (state.selectedGenre !== "All") {
+      filtered = filtered.filter((book) =>
+        book.genre.includes(state.selectedGenre)
+      );
     }
 
-    if (selectedRating) {
+    if (state.selectedRating) {
       filtered = filtered.filter(
-        (book) => book.rating === parseInt(selectedRating)
+        (book) => book.rating === parseInt(state.selectedRating)
       );
     }
 
-    if (sortBy) {
-      const [type, direction] = sortBy.split("_");
+    if (state.sortBy) {
+      const [type, direction] = state.sortBy.split("_");
       const sortOrder = direction === "asc" ? 1 : -1;
       filtered.sort((a, b) => (a[type] - b[type]) * sortOrder);
     }
 
-    setFilteredBooks(filtered);
+    dispatch({ type: "SET_FILTERED_BOOKS", payload: filtered });
   };
 
-  const handleSearch = (event) => setSearchTerm(event.target.value);
-  const handleGenreChange = (event) => setSelectedGenre(event.target.value);
-  const handleRatingChange = (event) => setSelectedRating(event.target.value);
-  const handleSortChange = (event) => setSortBy(event.target.value);
-  const clearFilters = () => {
-    setSearchTerm("");
-    setSelectedGenre("All");
-    setSelectedRating("");
-    setSortBy("");
-  };
+  const handleSearch = (event) =>
+    dispatch({ type: "SET_SEARCH_TERM", payload: event.target.value });
+  const handleGenreChange = (event) =>
+    dispatch({ type: "SET_SELECTED_GENRE", payload: event.target.value });
+  const handleRatingChange = (event) =>
+    dispatch({ type: "SET_SELECTED_RATING", payload: event.target.value });
+  const handleSortChange = (event) =>
+    dispatch({ type: "SET_SORT_BY", payload: event.target.value });
+  const clearFilters = () => dispatch({ type: "CLEAR_FILTERS" });
 
   const isFilterApplied = () =>
-    searchTerm || selectedGenre !== "All" || selectedRating || sortBy;
+    state.searchTerm ||
+    state.selectedGenre !== "All" ||
+    state.selectedRating ||
+    state.sortBy;
 
   return (
     <div className="books-section">
@@ -80,16 +121,16 @@ const BooksList = () => {
           className="title-input-text"
           type="text"
           placeholder="Search by title or author"
-          value={searchTerm}
+          value={state.searchTerm}
           onChange={handleSearch}
         />
-        <select value={selectedGenre} onChange={handleGenreChange}>
+        <select value={state.selectedGenre} onChange={handleGenreChange}>
           <option value="All">All Genres</option>
           <option value="Ficción">Fiction</option>
           <option value="Misterio">Mystery</option>
           <option value="Fantasía">Fantasy</option>
         </select>
-        <select value={selectedRating} onChange={handleRatingChange}>
+        <select value={state.selectedRating} onChange={handleRatingChange}>
           <option value="">All Ratings</option>
           <option value="0">0</option>
           <option value="1">1</option>
@@ -98,7 +139,7 @@ const BooksList = () => {
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-        <select value={sortBy} onChange={handleSortChange}>
+        <select value={state.sortBy} onChange={handleSortChange}>
           <option value="">Sort By</option>
           <option value="rating_desc">More Rating ↓</option>
           <option value="rating_asc">Less Rating ↑</option>
@@ -112,21 +153,25 @@ const BooksList = () => {
         )}
         <div
           className={`results-count ${
-            filteredBooks.length === 0 ? "no-books-found" : ""
+            state.filteredBooks.length === 0 ? "no-books-found" : ""
           }`}
         >
-          {filteredBooks.length === 0 ? "" : `${filteredBooks.length} results`}
+          {state.filteredBooks.length === 0
+            ? ""
+            : `${state.filteredBooks.length} results`}
         </div>
       </div>
       <div
         className={`books-container ${
-          filteredBooks.length === 0 ? "no-books-found" : ""
+          state.filteredBooks.length === 0 ? "no-books-found" : ""
         }`}
       >
-        {filteredBooks.length === 0 ? (
+        {state.filteredBooks.length === 0 ? (
           <p className="no-books-message">No books found.</p>
         ) : (
-          filteredBooks.map((book) => <BookCard book={book} key={book._id} />)
+          state.filteredBooks.map((book) => (
+            <BookCard book={book} key={book._id} />
+          ))
         )}
       </div>
     </div>

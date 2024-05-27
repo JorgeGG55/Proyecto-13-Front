@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useReducer, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import useModal from "../../hooks/useModal";
@@ -14,12 +14,42 @@ import {
 import { useAuth } from "../../hooks/useAuth";
 import "./Loans.css";
 
+const initialState = {
+  loans: [],
+  noLoans: false,
+  selectedBook: null,
+  commentText: "",
+  rating: 0,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_LOANS":
+      return {
+        ...state,
+        loans: action.payload,
+        noLoans: action.payload.length === 0,
+      };
+    case "SET_NO_LOANS":
+      return { ...state, noLoans: true };
+    case "SET_SELECTED_BOOK":
+      return { ...state, selectedBook: action.payload };
+    case "SET_COMMENT_TEXT":
+      return { ...state, commentText: action.payload };
+    case "SET_RATING":
+      return { ...state, rating: action.payload };
+    case "REMOVE_LOAN":
+      return {
+        ...state,
+        loans: state.loans.filter((loan) => loan._id !== action.payload),
+      };
+    default:
+      return state;
+  }
+}
+
 const Loans = () => {
-  const [loans, setLoans] = useState([]);
-  const [noLoans, setNoLoans] = useState(false);
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [commentText, setCommentText] = useState("");
-  const [rating, setRating] = useState(0);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const navigate = useNavigate();
   const { token } = useAuth();
   const {
@@ -37,10 +67,9 @@ const Loans = () => {
     try {
       const fetchedLoans = await fetchUserLoans();
       if (fetchedLoans.length === 0) {
-        setNoLoans(true);
+        dispatch({ type: "SET_NO_LOANS" });
       } else {
-        setLoans(fetchedLoans);
-        setNoLoans(false);
+        dispatch({ type: "SET_LOANS", payload: fetchedLoans });
       }
     } catch (error) {}
   }, []);
@@ -56,7 +85,7 @@ const Loans = () => {
   const handleFinishLoan = async (loanId) => {
     try {
       const response = await finishLoan(loanId);
-      setLoans((prevLoans) => prevLoans.filter((loan) => loan._id !== loanId));
+      dispatch({ type: "REMOVE_LOAN", payload: loanId });
       toast.success(response.message, { duration: 7000 });
     } catch (error) {
       toast.error(error.message, { duration: 7000 });
@@ -65,7 +94,7 @@ const Loans = () => {
 
   const handleCommentSubmit = async () => {
     try {
-      await postComment(selectedBook._id, commentText);
+      await postComment(state.selectedBook._id, state.commentText);
       toast.success("Comment posted", { duration: 4000 });
       closeCommentModal();
     } catch (error) {
@@ -75,12 +104,12 @@ const Loans = () => {
   };
 
   const handleRateSubmit = async () => {
-    if (!rating) {
+    if (!state.rating) {
       toast.error("The rating cannot be empty", { duration: 7000 });
       return;
     }
     try {
-      await postRating(selectedBook._id, rating);
+      await postRating(state.selectedBook._id, state.rating);
       toast.success("Rating posted", { duration: 4000 });
       closeRateModal();
     } catch (error) {
@@ -94,10 +123,10 @@ const Loans = () => {
       <Toaster position="bottom-right" expand={true} richColors />
       <div className="loans-container">
         <h2>My loans</h2>
-        {noLoans && <p>No loans associated with your account</p>}
+        {state.noLoans && <p>No loans associated with your account</p>}
         <div className="cards-container">
-          {loans.length > 0 ? (
-            loans.map((loan) => (
+          {state.loans.length > 0 ? (
+            state.loans.map((loan) => (
               <div key={loan._id} className="card">
                 <img
                   src={loan.book_ID.bookImg}
@@ -117,7 +146,10 @@ const Loans = () => {
                     <button
                       className="btn btn-rate"
                       onClick={() => {
-                        setSelectedBook(loan.book_ID);
+                        dispatch({
+                          type: "SET_SELECTED_BOOK",
+                          payload: loan.book_ID,
+                        });
                         openRateModal();
                       }}
                     >
@@ -126,7 +158,10 @@ const Loans = () => {
                     <button
                       className="btn btn-comment"
                       onClick={() => {
-                        setSelectedBook(loan.book_ID);
+                        dispatch({
+                          type: "SET_SELECTED_BOOK",
+                          payload: loan.book_ID,
+                        });
                         openCommentModal();
                       }}
                     >
@@ -148,21 +183,25 @@ const Loans = () => {
         </div>
       </div>
       <Modal isOpen={isRateModalOpen} onClose={closeRateModal}>
-        {selectedBook && (
+        {state.selectedBook && (
           <RateModal
-            book={selectedBook}
-            rating={rating}
-            onRatingChange={(e) => setRating(e.target.value)}
+            book={state.selectedBook}
+            rating={state.rating}
+            onRatingChange={(e) =>
+              dispatch({ type: "SET_RATING", payload: e.target.value })
+            }
             onSubmit={handleRateSubmit}
           />
         )}
       </Modal>
       <Modal isOpen={isCommentModalOpen} onClose={closeCommentModal}>
-        {selectedBook && (
+        {state.selectedBook && (
           <CommentModal
-            book={selectedBook}
-            commentText={commentText}
-            onCommentChange={(e) => setCommentText(e.target.value)}
+            book={state.selectedBook}
+            commentText={state.commentText}
+            onCommentChange={(e) =>
+              dispatch({ type: "SET_COMMENT_TEXT", payload: e.target.value })
+            }
             onSubmit={handleCommentSubmit}
           />
         )}

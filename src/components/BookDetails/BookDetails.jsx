@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import StarRating from "../StarRating/StarRating";
@@ -12,12 +12,33 @@ import {
 } from "../../utils/APIRoutes";
 import "./BookDetails.css";
 
+const initialState = {
+  book: null,
+  reviews: [],
+  comments: [],
+  isLoading: false,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_BOOK":
+      return { ...state, book: action.payload };
+    case "SET_REVIEWS":
+      return { ...state, reviews: action.payload };
+    case "SET_COMMENTS":
+      return { ...state, comments: action.payload };
+    case "SET_IS_LOADING":
+      return { ...state, isLoading: action.payload };
+    case "DECREMENT_UNITS":
+      return { ...state, book: { ...state.book, units: state.book.units - 1 } };
+    default:
+      return state;
+  }
+}
+
 const BookDetails = () => {
   const { bookId } = useParams();
-  const [book, setBook] = useState(null);
-  const [reviews, setReviews] = useState([]);
-  const [comments, setComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const navigate = useNavigate();
   const { token } = useAuth();
 
@@ -26,15 +47,15 @@ const BookDetails = () => {
       try {
         const bookResponse = await fetch(getBookById(bookId));
         const bookData = await bookResponse.json();
-        setBook(bookData);
+        dispatch({ type: "SET_BOOK", payload: bookData });
 
         const reviewsResponse = await fetch(getReviewsByBookId(bookId));
         const reviewsData = await reviewsResponse.json();
-        setReviews(reviewsData);
+        dispatch({ type: "SET_REVIEWS", payload: reviewsData });
 
         const commentsResponse = await fetch(getCommentsByBookId(bookId));
         const commentsData = await commentsResponse.json();
-        setComments(commentsData);
+        dispatch({ type: "SET_COMMENTS", payload: commentsData });
       } catch (error) {
         console.error("Failed to fetch book details:", error);
       }
@@ -56,7 +77,7 @@ const BookDetails = () => {
     }
 
     try {
-      setIsLoading(true);
+      dispatch({ type: "SET_IS_LOADING", payload: true });
       const response = await fetch(createLoan(bookId), {
         method: "POST",
         headers: {
@@ -68,21 +89,18 @@ const BookDetails = () => {
 
       if (response.ok) {
         toast.success(result.message, { duration: 7000 });
-        setBook((prevBook) => ({
-          ...prevBook,
-          units: prevBook.units - 1,
-        }));
+        dispatch({ type: "DECREMENT_UNITS" });
       } else {
         toast.error(result.message, { duration: 5000 });
       }
     } catch (error) {
       console.error("Failed to create loan:", error);
     } finally {
-      setIsLoading(false);
+      dispatch({ type: "SET_IS_LOADING", payload: false });
     }
   };
 
-  if (!book) {
+  if (!state.book) {
     return <p>Loading...</p>;
   }
 
@@ -91,11 +109,11 @@ const BookDetails = () => {
       <Toaster position="bottom-right" expand={true} richColors />
       <div className="firstContainer">
         <div>
-          <h1 className="bookTitle">{book.title}</h1>
-          <h2 className="bookAuthor">{book.author}</h2>
+          <h1 className="bookTitle">{state.book.title}</h1>
+          <h2 className="bookAuthor">{state.book.author}</h2>
           <div className="genreContainer">
-            {book.genre &&
-              book.genre.map((genre, index) => (
+            {state.book.genre &&
+              state.book.genre.map((genre, index) => (
                 <p key={index} className="genre">
                   {genre}
                 </p>
@@ -103,27 +121,34 @@ const BookDetails = () => {
           </div>
         </div>
 
-        <img className="bookImg" src={book.bookImg} alt={book.title} />
+        <img
+          className="bookImg"
+          src={state.book.bookImg}
+          alt={state.book.title}
+        />
         <button className="loanButton" onClick={handleLoanBook}>
-          <span>{isLoading ? "Loaning Book..." : "Loan Book"}</span>
-          {isLoading && <LoadingSpinner />}
+          <span>{state.isLoading ? "Loaning Book..." : "Loan Book"}</span>
+          {state.isLoading && <LoadingSpinner />}
         </button>
 
         <div className="subSecondContainer">
-          <StarRating rating={book.rating} totalReviews={reviews.length} />
-          <p className="units">{book.units} units available</p>
+          <StarRating
+            rating={state.book.rating}
+            totalReviews={state.reviews.length}
+          />
+          <p className="units">{state.book.units} units available</p>
         </div>
       </div>
 
       <div className="secondContainer">
         <div className="descriptionContainer">
           <h2 className="descriptionTitle">About</h2>
-          <p>{book.description}</p>
+          <p>{state.book.description}</p>
         </div>
         <div className="reviewContainer">
           <h2 className="reviewTitle">Customer reviews</h2>
-          {comments.length > 0 ? (
-            comments.map((comment, index) => (
+          {state.comments.length > 0 ? (
+            state.comments.map((comment, index) => (
               <div key={index}>
                 <div className="userContainer">
                   <div className="userNameContainer">
