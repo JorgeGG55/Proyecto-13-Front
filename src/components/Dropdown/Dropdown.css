@@ -1,5 +1,6 @@
 .user-info {
   position: relative;
+  margin-left: 50px;
 }
 
 .user-button {
@@ -52,4 +53,11 @@
 
 .dropdown-menu button:hover {
   background: #444;
+}
+
+@media screen and (max-width: 768px) {
+  .user-info {
+    margin-top: 50px;
+    margin-left: 0;
+  }
 }

@@ -85,6 +85,10 @@
   .book-info {
     padding: 30px 10px;
   }
+
+  .book-card {
+    width: 91%;
+  }
 }
 
 @media (min-width: 1025px) and (max-width: 1280px) {

@@ -9,23 +9,19 @@ header {
   justify-content: space-between;
 }
 
-.loginButton-home {
+.nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.loginButton {
   border: none;
-  color: #fff;
   background-color: transparent;
   font-weight: 700;
   cursor: pointer;
 }
 
-.loginButton-other {
-  border: none;
-  color: black;
-  background-color: transparent;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.book-button-home {
+.book-button {
   cursor: pointer;
   padding: 10px 15px;
   border: 1px solid #fff;
@@ -40,45 +36,35 @@ header {
   width: 100px;
 }
 
-.book-button-other {
-  cursor: pointer;
-  padding: 10px 15px;
-  border: 1px solid #c7cccf;
-  background-color: transparent;
-  border-radius: 10px;
-  font-weight: bold;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  width: 100px;
-}
-
 .book-button:hover {
   text-decoration: underline;
 }
 
-.menu-button {
+.hamburger {
+  display: none;
   background: none;
   border: none;
-  padding: 0;
+  font-size: 1.5em;
   cursor: pointer;
 }
 
-.menu-button img {
-  width: 30px;
-  height: 30px;
+.home {
+  color: #fff;
+}
+
+.other {
+  color: #1a2d31;
 }
 
 .sidebar {
   position: fixed;
   display: flex;
-  padding: 2rem 0rem;
-  top: 150px;
+  padding: 2rem 0;
+  top: 0;
   left: -400px;
   width: 400px;
   height: 100vh;
-  background-color: #221b1b;
+  background-color: #d2d2d2;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   transition: left 0.3s ease;
   z-index: 9999;
@@ -91,9 +77,31 @@ header {
 }
 
 @media screen and (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   header {
-    padding: 4rem 3rem;
+    display: flex;
+    padding: 2rem 2rem;
     transition: background-color 0.3s ease;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-items {
+    display: none;
+  }
+
+  .sidebar {
+    top: 180px;
+    width: 100%;
   }
 }
 

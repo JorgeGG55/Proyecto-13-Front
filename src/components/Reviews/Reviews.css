@@ -88,6 +88,12 @@ td {
   border: 1px solid #1a2d31;
 }
 
+.table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .pagination-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;

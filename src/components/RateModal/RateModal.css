@@ -73,7 +73,8 @@
 
 @media (max-width: 768px) {
   .rate-container {
-    width: 330px;
+    flex-direction: column;
+    width: 220px;
   }
 
   .rate-comment-container {
