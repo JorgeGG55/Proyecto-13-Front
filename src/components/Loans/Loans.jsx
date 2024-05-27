@@ -66,12 +66,11 @@ const Loans = () => {
   const handleCommentSubmit = async () => {
     try {
       await postComment(selectedBook._id, commentText);
-      toast.success("Comment posted. Redirecting...", { duration: 4000 });
-      setTimeout(() => {
-        navigate(`/books/${selectedBook._id}`);
-      }, 3000);
+      toast.success("Comment posted", { duration: 4000 });
+      closeCommentModal();
     } catch (error) {
       toast.error(error.message, { duration: 7000 });
+      closeCommentModal();
     }
   };
 
@@ -82,12 +81,11 @@ const Loans = () => {
     }
     try {
       await postRating(selectedBook._id, rating);
-      toast.success("Rating posted. Redirecting...", { duration: 4000 });
-      setTimeout(() => {
-        navigate(`/books/${selectedBook._id}`);
-      }, 3000);
+      toast.success("Rating posted", { duration: 4000 });
+      closeRateModal();
     } catch (error) {
       toast.error(error.message, { duration: 7000 });
+      closeRateModal();
     }
   };
 

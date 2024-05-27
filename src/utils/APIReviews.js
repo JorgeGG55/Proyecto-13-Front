@@ -8,12 +8,19 @@ const fetchWithToken = async (url, options = {}) => {
     ...options,
     headers: {
       ...options.headers,
-      Authorization: token,
+      Authorization: `${token}`,
     },
   });
 
+  if (response.status === 404) {
+    return [];
+  }
+
   const data = await response.json();
-  if (!response.ok) throw new Error(data.message || "Error fetching data");
+
+  if (!response.ok) {
+    throw new Error(data.message || "Error fetching data");
+  }
 
   return data;
 };
