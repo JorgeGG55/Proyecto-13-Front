@@ -143,7 +143,7 @@ const BookDetails = () => {
       <div className="secondContainer">
         <div className="descriptionContainer">
           <h2 className="descriptionTitle">About</h2>
-          <p>{state.book.description}</p>
+          <p className="book-description">{state.book.description}</p>
         </div>
         <div className="reviewContainer">
           <h2 className="reviewTitle">Customer reviews</h2>

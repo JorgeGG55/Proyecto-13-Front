@@ -68,6 +68,15 @@ select {
   margin-left: 10px;
 }
 
+@media (min-width: 1281px) {
+  .books-section {
+    padding: 0 8rem;
+  }
+  .books-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 @media (min-width: 1025px) and (max-width: 1280px) {
   .books-container {
     grid-template-columns: repeat(3, 1fr);
@@ -78,20 +87,34 @@ select {
   }
 }
 
+@media (min-width: 769px) and (max-width: 1024px) {
+  .books-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+  }
+  .books-section {
+    padding: 0 4rem;
+  }
+  .title-input-text,
+  select {
+    width: 40%;
+  }
+  .select {
+    width: 20%;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .books-section {
     padding: 0 2rem;
   }
-
   .filters {
     flex-direction: column;
     margin-bottom: 20px;
   }
-
   .books-container {
     grid-template-columns: repeat(1, 1fr);
   }
-
   .title-input-text,
   select {
     padding: 8px;
@@ -103,23 +126,47 @@ select {
     margin-bottom: 10px;
     width: 80%;
   }
-
   .title-input-text::placeholder {
     color: #999;
   }
-
   select {
     width: 80%;
     cursor: pointer;
   }
-
   .clear-button {
     width: 40%;
     margin-left: 0px;
     margin-bottom: 10px;
   }
-
   .book-info {
     padding: 30px 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .books-section {
+    padding: 0 1rem;
+  }
+  .filters {
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  .books-container {
+    grid-template-columns: 1fr;
+    grid-column-gap: 10px;
+  }
+  .title-input-text,
+  select {
+    padding: 6px;
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .clear-button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .book-info {
+    padding: 20px 5px;
   }
 }

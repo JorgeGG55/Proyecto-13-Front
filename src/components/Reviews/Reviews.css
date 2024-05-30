@@ -92,6 +92,7 @@ td {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 20px;
 }
 
 .pagination-button:disabled {
@@ -99,12 +100,28 @@ td {
   cursor: not-allowed;
 }
 
-.comment-text {
+@media (min-width: 1281px) {
+  .review-container {
+    padding: 0 8rem;
+  }
 }
-
 @media (min-width: 1025px) and (max-width: 1280px) {
   .review-container {
     margin-bottom: 5%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .review-container {
+    padding: 0 4rem;
+  }
+  .ratings-table,
+  .comments-table {
+    margin: 0 5px;
+  }
+  th,
+  td {
+    padding: 6px;
   }
 }
 
@@ -112,8 +129,46 @@ td {
   .review-container {
     flex-direction: column;
     padding: 0;
-    margin-right: 10%;
-    margin-left: 10%;
+    margin: 0 10%;
     margin-top: 0;
+  }
+  table {
+    width: 100%;
+  }
+  th,
+  td {
+    padding: 6px;
+  }
+  .pagination {
+    flex-direction: row;
+  }
+  .pagination-button {
+    margin: 0px 5px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .review-container {
+    margin: 0 5%;
+    padding: 0 1rem;
+  }
+  table {
+    width: 100%;
+  }
+  th,
+  td {
+    padding: 4px;
+  }
+  .pagination {
+    flex-direction: row;
+  }
+  .pagination-button {
+    margin: 0px 5px;
+    width: 100%;
+  }
+  .delete-button .button-img {
+    width: 15px;
+    height: 15px;
   }
 }

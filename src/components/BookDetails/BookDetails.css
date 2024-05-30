@@ -15,7 +15,9 @@
 .secondContainer {
   display: flex;
   flex-direction: row;
-  margin-left: 32%;
+  justify-content: space-around;
+  margin-left: 29%;
+  margin-right: 8rem;
 }
 
 .bookTitle {
@@ -26,8 +28,8 @@
   position: absolute;
   top: 250px;
   left: 220px;
-  height: 500px;
-  width: 325px;
+  height: 400px;
+  width: 240px;
   border-radius: 20px;
 }
 
@@ -72,7 +74,7 @@
 }
 
 .reviewContainer {
-  width: 30%;
+  width: 35%;
 }
 
 .reviewTitle {
@@ -99,9 +101,9 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 770px;
+  top: 660px;
   left: 220px;
-  width: 325px;
+  width: 240px;
   height: 45px;
   padding: 10px;
   border-radius: 10px;
@@ -115,8 +117,12 @@
   background-color: #2c4a50;
 }
 
-/* laptop */
-@media (min-width: 1025px) and (max-width: 1280px) {
+.book-description {
+  font-size: 15px;
+  text-align: justify;
+}
+
+@media (min-width: 1281px) and (max-width: 1440px) {
   .bookImg {
     height: 400px;
     width: 240px;
@@ -147,7 +153,98 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (min-width: 976px) and (max-width: 1120px) {
+  .secondContainer {
+    margin-left: 30% !important;
+  }
+}
+
+@media (min-width: 975px) and (max-width: 1280px) {
+  .bookImg {
+    height: 300px;
+    width: 200px;
+    left: 120px;
+    top: 230px;
+  }
+
+  .firstContainer {
+    padding-left: 19rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    padding-top: 1rem;
+    height: 260px;
+  }
+
+  .subSecondContainer {
+    margin-top: 1rem;
+  }
+
+  .loanButton {
+    top: 540px;
+    left: 120px;
+    width: 200px;
+  }
+
+  .secondContainer {
+    margin-left: 26%;
+  }
+
+  .reviewContainer {
+    width: 35%;
+  }
+
+  .book-description {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 875px) and (max-width: 974px) {
+  .bookImg {
+    height: 300px;
+    width: 200px;
+    left: 100px;
+    top: 230px;
+  }
+
+  .firstContainer {
+    padding-left: 17rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    padding-top: 1rem;
+    height: 220px;
+  }
+
+  .subSecondContainer {
+    margin-top: 1rem;
+  }
+
+  .descriptionContainer {
+    width: 45%;
+    margin-right: 0;
+  }
+
+  .loanButton {
+    top: 540px;
+    left: 100px;
+    width: 200px;
+  }
+
+  .secondContainer {
+    margin-left: 32%;
+    margin-right: 4rem;
+  }
+
+  .reviewTitle,
+  .descriptionTitle {
+    font-size: 20px;
+  }
+
+  .book-description {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 874px) {
   .firstContainer {
     flex-direction: column;
     justify-content: normal;
@@ -202,6 +299,8 @@
   .loanButton {
     margin-top: 20px;
     position: static;
+    background-color: transparent;
+    border: 1px solid #fff;
     width: 80%;
   }
 
