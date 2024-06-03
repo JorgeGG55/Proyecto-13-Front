@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  align-items: center;
   margin: 0rem 8rem;
   border-bottom: 2px solid #1a2d31;
 }
@@ -17,9 +16,9 @@
 }
 
 .top-books-container {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-column-gap: 40px;
 }
 
 .book-container {
@@ -41,68 +40,9 @@
   color: #666;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   .section {
-    margin: 0;
-  }
-
-  .top-books-container {
-    flex-direction: column;
+    margin: 0 2rem;
     align-items: center;
-  }
-}
-
-@media only screen and (min-width: 600px) {
-  .section {
-    margin: 0 2rem;
-  }
-  .top-books-container {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .book-container {
-    width: calc(50% - 10px);
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .section {
-    margin: 0 2rem;
-  }
-  .top-books-container {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .book-container {
-    width: calc(50% - 10px);
-  }
-}
-
-@media (min-width: 1025px) and (max-width: 1280px) {
-  .section {
-    margin: 0 4rem;
-  }
-
-  .top-books-container {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .book-container {
-    width: calc(29% - 10px);
-  }
-}
-
-@media (min-width: 1281px) {
-  .top-books-container {
-    flex-wrap: nowrap;
-    justify-content: space-between;
-  }
-
-  .book-container {
-    width: calc(20% - 10px);
-    margin-bottom: 20px;
   }
 }

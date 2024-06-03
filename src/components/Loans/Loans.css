@@ -1,15 +1,19 @@
 .loans-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
   padding: 0 8rem;
 }
 
+.loans-title,
+.no-loans-text {
+  text-align: center;
+}
+
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 99px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-column-gap: 40px;
+  grid-row-gap: 60px;
   margin-bottom: 5%;
 }
 
@@ -91,17 +95,10 @@
 }
 
 @media (max-width: 768px) {
-  .loans-container {
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 0;
-  }
-
   .cards-container {
     display: flex;
-    flex-wrap: nowrap;
     flex-direction: column;
-    margin-bottom: 5%;
+    align-items: center;
   }
 
   .book-img {

@@ -122,7 +122,7 @@ const Loans = () => {
     <>
       <Toaster position="bottom-right" expand={true} richColors />
       <div className="loans-container">
-        <h2>My loans</h2>
+        <h2 className="loans-title">My loans</h2>
         {state.noLoans && <p>No loans associated with your account</p>}
         <div className="cards-container">
           {state.loans.length > 0 ? (
@@ -178,7 +178,9 @@ const Loans = () => {
               </div>
             ))
           ) : (
-            <p>No loans associated with your account</p>
+            <p className="no-loans-text">
+              No loans associated with your account
+            </p>
           )}
         </div>
       </div>
